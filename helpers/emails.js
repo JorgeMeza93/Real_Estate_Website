@@ -21,7 +21,7 @@ const emailRegistro = async (datos) =>{
         html: `
             <p>Hola ${nombre} confirma tu cuenta en BienesRaices Pipo </p>
             <p>Tu cuenta ya está lista, sólo necesitas confirmarla haciendo click en el siguiente enlace</p>
-            <p><a href="">Confirmar cuenta </a></p>
+            <p><a href="${process.env.BACKEND_URL}:${process.env.PORT ?? 4000}/auth/confirmar/${token}">Confirmar cuenta </a></p>
             <p>Si tu no has creado esta cuenta, ignora este mensaje</p>
         `
     });

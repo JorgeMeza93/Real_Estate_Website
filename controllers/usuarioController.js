@@ -2,6 +2,7 @@ import Usuario from "../models/Usuario.js";
 import { check, validationResult } from "express-validator";
 import { generarID } from "../helpers/tokens.js";
 import { emailRegistro } from "../helpers/emails.js";
+import { NUMERIC } from "sequelize";
 
 const formularioLogin = (req, res) => {
     res.render("auth/login", {
@@ -65,10 +66,15 @@ const registrar = async (req, res) => {
         mensaje: "Hemos enviado un Email de confirmación, presiona en el enlace"
     })
 }
+const confirmar = (req, res, next) => {
+    console.log("Comprobando");
+    next();
+}
+
 const formularioOlvidePassword = (req, res) => {
     res.render("auth/olvidePassword", {
         pagina: "¿Olvidaste tu password? Recuperala"
     })
 }
 
-export { formularioLogin, formularioRegistro, formularioOlvidePassword, registrar };
+export { formularioLogin, formularioRegistro, formularioOlvidePassword, registrar, confirmar };
