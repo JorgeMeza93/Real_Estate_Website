@@ -1,10 +1,16 @@
 import express from "express";
 import usuarioRoutes from "./routes/usuarioRoutes.js";
 import db from "./config/db.js";
+import csrf from "csurf";
+import cookieParser from "cookie-parser";
 
 const app = express();
 // Habilitar lectura de datos de formularios
 app.use( express.urlencoded({ extended: true }))
+//Habilitar Cookie Parser
+app.use(cookieParser());
+//Habilitar Cookie Parser
+app.use( csrf({ cookie: true }));
 //Conexión a la base de datos
 try {
     await db.authenticate();
