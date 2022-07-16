@@ -92,11 +92,25 @@ const confirmar = async (req, res, next) => {
 
 const formularioOlvidePassword = (req, res) => {
     res.render("auth/olvidePassword", {
-        pagina: "¿Olvidaste tu password? Recuperala"
+        pagina: "¿Olvidaste tu password? Recuperala",
+        csrfToken: req.csrfToken()
     })
 }
 
-const resetPassword = (req, res) => {
+const resetPassword = async (req, res) => {
+    //Validación
+    await check("email").isEmail().withMessage("Eso no parece un email").run(req);
+    let resultado = validationResult(req);
+    //Verificacion del resultado este vacío
+    if(!resultado.isEmpty()){
+        //Si hay errotes
+        return res.render("auth/olvidePassword", {
+            pagina: "Recupera tu acceso a Bienes Raíces",
+            csrfToken: req.csrfToken(),
+            errores: resultado.array()
+        })
+    }
+    //Buscar al usuario del email
 
 }
 
