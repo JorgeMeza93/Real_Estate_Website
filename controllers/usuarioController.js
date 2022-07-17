@@ -195,5 +195,24 @@ const nuevoPassword = async (req, res) => {
             errores: resultado.array()
         })
     }
+    const { email, password } = req.body;
+    //Comprobar si el usuario existe
+    const usuario = await Usuario.findOne( { where: { email } });
+    if( !usuario ){
+        return res.render("auth/login", {
+            pagina: "Iniciar Sesión",
+            csrfToken: req.csrfToken(),
+            errores: [ {msg: "El usuario no existe"} ]
+        })
+    }
+    //Comprobar si el usuario no está confirmado
+    if( !usuario.confirmado ){
+        return res.render("auth/login", {
+            pagina: "Iniciar Sesión",
+            csrfToken: req.csrfToken(),
+            errores: [ {msg: "Tu cuenta aun no ha sido confirmada"} ]
+        })
+    }
+
 }
 export { formularioLogin, formularioRegistro, formularioOlvidePassword, registrar, confirmar, resetPassword, comprobarTokenPassword, nuevoPassword, autenticar };
