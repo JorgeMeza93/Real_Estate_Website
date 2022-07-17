@@ -6,7 +6,8 @@ import bcrypt from "bcrypt";
 
 const formularioLogin = (req, res) => {
     res.render("auth/login", {
-        pagina: "Iniciar Sesión"
+        pagina: "Iniciar Sesión",
+        csrfToken: req.csrfToken()
     });
 }
 const formularioRegistro = (req, res) => {
@@ -179,4 +180,20 @@ const nuevoPassword = async (req, res) => {
         mensaje: "El password se guardó correctamente"
     })
 }
-export { formularioLogin, formularioRegistro, formularioOlvidePassword, registrar, confirmar, resetPassword, comprobarTokenPassword, nuevoPassword };
+
+ //Autenticar
+ const autenticar = async (req, res) => {
+    console.log("Autenticando");
+    //Validación
+    await check("email").isEmail().withMessage("El email es obligatorio").run(req);
+    await check("password").notEmpty().withMessage("El password es obligatorio").run(req);
+    let resultado = validationResult(req);
+    if( !resultado.isEmpty() ){
+        return res.render("auth/login", {
+            pagina: "Iniciar Sesión",
+            csrfToken: req.csrfToken(),
+            errores: resultado.array()
+        })
+    }
+}
+export { formularioLogin, formularioRegistro, formularioOlvidePassword, registrar, confirmar, resetPassword, comprobarTokenPassword, nuevoPassword, autenticar };
