@@ -181,7 +181,7 @@ const nuevoPassword = async (req, res) => {
     })
 }
 
- //Autenticar
+ //--------------------Login---------- 
  const autenticar = async (req, res) => {
     console.log("Autenticando");
     //Validación
@@ -213,6 +213,13 @@ const nuevoPassword = async (req, res) => {
             errores: [ {msg: "Tu cuenta aun no ha sido confirmada"} ]
         })
     }
-
+    //Revisar que el password coincida
+    if( !usuario.verificarPassword() ){
+        return res.render("auth/login" ,{
+            pagina: "Inicia Sesión",
+            csrfToken: req.csrfToken(),
+            errores: [{ msg: "El password es incorrecto"}]
+        });
+    }
 }
 export { formularioLogin, formularioRegistro, formularioOlvidePassword, registrar, confirmar, resetPassword, comprobarTokenPassword, nuevoPassword, autenticar };
