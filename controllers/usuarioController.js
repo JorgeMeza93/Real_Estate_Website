@@ -1,8 +1,10 @@
 import Usuario from "../models/Usuario.js";
 import { check, validationResult } from "express-validator";
-import { generarID } from "../helpers/tokens.js";
+import { generarID, generarJWT } from "../helpers/tokens.js";
 import { emailRegistro, emailOlvidePassword } from "../helpers/emails.js";
 import bcrypt from "bcrypt";
+
+
 
 const formularioLogin = (req, res) => {
     res.render("auth/login", {
@@ -214,12 +216,21 @@ const nuevoPassword = async (req, res) => {
         })
     }
     //Revisar que el password coincida
-    if( !usuario.verificarPassword() ){
+    if( !usuario.verificarPassword(password) ){
         return res.render("auth/login" ,{
             pagina: "Inicia Sesión",
             csrfToken: req.csrfToken(),
             errores: [{ msg: "El password es incorrecto"}]
         });
     }
+    //Autenticar al usuario
+    const token = generarJWT({id: usuario.id, nombre: usuario.nombre });
+    console.log(token);
+    //Almacenar en un cookie
+    return res.cookie("_token", token, {
+        httpOnly: true,
+        //secure: true,   <-- De momento no tenemos certificado ssl así que lo comentamos
+    }).redirect("/mis-propiedades");
+
 }
 export { formularioLogin, formularioRegistro, formularioOlvidePassword, registrar, confirmar, resetPassword, comprobarTokenPassword, nuevoPassword, autenticar };
