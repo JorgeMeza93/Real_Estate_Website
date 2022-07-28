@@ -6,6 +6,6 @@ const Categoria = db.define("categorias", {
         type: DataTypes.STRING(30),
         allowNull: false
     }
-})
+});
 
 export default Categoria;

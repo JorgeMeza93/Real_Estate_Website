@@ -9,11 +9,11 @@ const Propiedad = db.define("propiedades", {
         primaryKey: true
     },
     titulo: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING,
         allowNull: false
     },
     descripcion: {
-        type: DataTypes.TEXT(2900),
+        type: DataTypes.TEXT,
         allowNull: false
     },
     habitaciones: {
@@ -46,7 +46,7 @@ const Propiedad = db.define("propiedades", {
     },
     publicado: {
         type: DataTypes.BOOLEAN,
-        allowNull: fañse,
+        allowNull: false,
         defaultValue: false
     }
 
