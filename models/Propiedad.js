@@ -28,6 +28,10 @@ const Propiedad = db.define("propiedades", {
         type: DataTypes.INTEGER,
         allowNull: false
     },
+    jardin: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
     calle: {
         type: DataTypes.STRING(100),
         allowNull: false

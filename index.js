@@ -1,9 +1,10 @@
 import express from "express";
 import usuarioRoutes from "./routes/usuarioRoutes.js";
+import propiedadesRoutes from "./routes/propiedadesRoutes.js";
 import db from "./config/db.js";
 import csrf from "csurf";
 import cookieParser from "cookie-parser";
-import propiedadesRoutes from "./routes/propiedadesRoutes.js";
+
 
 const app = express();
 // Habilitar lectura de datos de formularios

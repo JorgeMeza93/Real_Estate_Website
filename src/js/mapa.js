@@ -1,7 +1,7 @@
 (function() {
     
-    const lat = 19.4030867;
-    const lng = -99.1743499;
+    const lat = document.querySelector("#lat").value || 19.4030867;
+    const lng = document.querySelector("#lng").value || -99.1743499;
     const mapa = L.map('mapa').setView([lat, lng ], 15);
     let marker;
     //Utilizar provider y geocoder
@@ -25,8 +25,8 @@
             console.log(resultado);
             marker.bindPopup(resultado.address.LongLabel);
             //Llenar los campos
-            document.querySelector(".calle").textContent = resultado?.address?.Address ?? "";
-            document.querySelector("#calle").value = resultado?.latlng?.lat ?? "";
+            document.querySelector(".calle").innerText = resultado.address.LongLabel
+            document.querySelector("#lat").value = resultado?.latlng?.lat ?? "";
             document.querySelector("#lng").value = resultado?.latlng?.lng ?? "";
 
         });
